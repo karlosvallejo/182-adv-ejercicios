@@ -1,12 +1,13 @@
 import * as React from 'react';
-import { observer } from 'mobx-react';
-
-import { store } from '../../stores/Store';
 
 interface ISelectorProps{
+    list: String[];
+    onSelected: any;
+    selected: string;
+    clicks: number[];
 }
 
-@observer export class Selector extends React.Component<ISelectorProps>{
+export class Selector extends React.Component<ISelectorProps>{
 
     constructor(props: any){
         super(props);
@@ -15,12 +16,12 @@ interface ISelectorProps{
     render(){
         return <div>
             <ul>
-                {store.tasks.map((elem: string, index: number) => 
+                {this.props.list.map((elem: string, index: number) =>
                     <li key={elem}
-                        onClick={() => store.onChangeSelected(elem)}
-                        style={{ color: store.selected === elem ? 'yellow' : 'black' }}
+                        onClick={() => this.props.onSelected(elem)}
+                        style={{ color: this.props.selected === elem ? 'red' : 'black' }}
                         >
-                        {elem} - {store.clicks[index]}
+                        {elem} - {this.props.clicks[index]}
                     </li>
                 )}
             </ul>
