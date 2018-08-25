@@ -11,7 +11,7 @@ import './Root.css';
 
 import {Login} from "../Login/Login";
 import {Register} from "../Register/Register";
-import {Menu} from "../../components/Menu/Menu";
+import {Menu} from "../Menu/Menu";
 import {Home} from "../Home/Home";
 
 interface IRootProps{}
@@ -43,7 +43,7 @@ export const PrivateRoute = ({ component, ...rest }: RouteProps) => {
     }
 
     const Component = component; // JSX Elements have to be uppercase.
-    const render = (props: RouteComponentProps<any>): React.ReactNode => {
+    const render = (props: RouteComponentProps<{}>): React.ReactNode => {
         if (store.isAuthenticated) {
             return <Component {...props} />;
         }

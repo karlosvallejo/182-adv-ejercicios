@@ -4,6 +4,8 @@ import { setupMaster } from 'cluster';
 class Store{
     @observable isAuthenticated: boolean = false;
 
+    @observable userName: string = 'karlos';
+
 
     @action authenticate(cb: any) {
         this.isAuthenticated = true;

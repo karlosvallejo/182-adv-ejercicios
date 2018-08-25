@@ -1,4 +1,6 @@
-const ErrorOverlayPlugin = require('error-overlay-webpack-plugin');
+const ErrorOverlayPlugin = require('error-overlay-webpack-plugin'),
+    history = require('connect-history-api-fallback'),
+    convert = require('koa-connect');
 
 module.exports = {
   mode: process.env.WEBPACK_SERVE ? 'development' : 'production',
@@ -54,3 +56,15 @@ module.exports = {
 
   plugins: [new ErrorOverlayPlugin()]
 };
+
+module.exports.serve = {
+    content: ['public'],
+    add: (app, middleware, options) => {
+        app.use(convert(history()));
+    },
+    open: true,
+    dev: {
+        publicPath: "/assets/dist/"
+    }
+};
+

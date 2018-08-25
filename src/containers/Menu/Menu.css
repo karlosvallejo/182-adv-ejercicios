@@ -25,3 +25,7 @@
     cursor: pointer;
     background: aqua;
 }
+
+.UserNameDiv p {
+    margin: 0.5%;
+}
