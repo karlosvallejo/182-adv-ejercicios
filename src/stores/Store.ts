@@ -2,33 +2,19 @@ import { observable, action, computed } from 'mobx';
 import { setupMaster } from 'cluster';
 
 class Store{
-    @observable tasks: string[] = [
-        'Angular',
-        'is',
-        'for',
-        'losers',
-    ];
-    @observable clicks: number[] = new Array(this.tasks.length).fill(0);
-    @observable selected: string = null;
+    @observable isAuthenticated: boolean = false;
 
-    @observable user: string = 'Jaime';
 
-    @computed get total(){
-        console.log('calculando');
-        return store.clicks.reduce((total: number, current: number) => {
-            return total + current;
-        }, 0);
+    @action authenticate(cb: any) {
+        this.isAuthenticated = true;
+        setTimeout(cb, 100) // fake async
     }
 
-    @action onChangeSelected(newSelected: string){
-        this.selected = newSelected;
-        let index = this.tasks.indexOf(this.selected);
-        this.clicks[index]++;
+    @action signout(cb: any) {
+        this.isAuthenticated = false;
+        setTimeout(cb, 100) // fake async
     }
 
-    @action setUser(user: string){
-        this.user = user;
-    }
 }
 
 export const store = new Store();

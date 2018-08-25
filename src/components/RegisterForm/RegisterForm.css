@@ -1,0 +1,8 @@
+.RegisterForm {
+    position: relative;
+    left: 20%;
+    top: 10%;
+    width: 60%;
+    height: 80%;
+    background: rgba(200,150,150);
+}
