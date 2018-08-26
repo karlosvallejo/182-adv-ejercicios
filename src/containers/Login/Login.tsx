@@ -15,6 +15,7 @@ export class Login extends Component<RouteProps,{}> {
         if(store.isAuthenticated) {
          return <Redirect to={'/Home'}/>
         }
+
         return <div className={'divLogin'}>
             <LoginForm from={this.props.location.state} title={'Logeate Papu'}/>
         </div>

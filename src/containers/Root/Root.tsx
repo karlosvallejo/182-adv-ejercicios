@@ -14,9 +14,9 @@ import {Register} from "../Register/Register";
 import {Menu} from "../Menu/Menu";
 import {Home} from "../Home/Home";
 
-interface IRootProps{}
 
-@observer export class Root extends React.Component<IRootProps> {
+
+@observer export class Root extends React.Component<{},{}> {
 
     render(){
         return <div className="RootDiv">
@@ -27,7 +27,7 @@ interface IRootProps{}
                  <Menu/>
                 <Route exact path="/" component={Login} />
                 <Route exact path="/Registro" component={Register} />
-                <PrivateRoute exact path="/Home" component={Home} />
+                <ProtectedRoute  {...{authenticationPath: '/'}}  exact={true} path='/Home' component={Home} />
                 </div>
             </Router>
         </div>
@@ -35,24 +35,25 @@ interface IRootProps{}
 }
 
 
+export interface ProtectedRouteProps extends RouteProps {
+    authenticationPath: string;
+}
 
-export const PrivateRoute = ({ component, ...rest }: RouteProps) => {
-
-    if (!component) {
-        throw Error("component is undefined");
-    }
-
-    const Component = component; // JSX Elements have to be uppercase.
-    const render = (props: RouteComponentProps<{}>): React.ReactNode => {
-        if (store.isAuthenticated) {
-            return <Component {...props} />;
+export class ProtectedRoute extends Route<ProtectedRouteProps> {
+    public render() {
+        let redirectPath: string = '';
+        if (!store.isAuthenticated) {
+            redirectPath = this.props.authenticationPath;
         }
-        return <Redirect to={{ pathname: '/',
-            state: { from: props.location } }} />
-    };
 
-    return (<Route {...rest} render={render} />);
-};
+        if (redirectPath) {
+            const renderComponent = () => (<Redirect to={{pathname: redirectPath}}/>);
+            return <Route {...this.props} component={renderComponent} render={undefined}/>;
+        } else {
+            return <Route {...this.props}/>;
+        }
+    }
+}
 
 
 

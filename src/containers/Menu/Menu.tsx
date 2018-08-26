@@ -5,7 +5,7 @@ import {Link, RouteComponentProps, withRouter} from "react-router-dom";
 import {store} from "../../stores/Store";
 import {Component} from "react";
 import {observer} from "mobx-react";
-import {any} from "prop-types";
+import * as PropTypes from 'prop-types'
 
 
 
@@ -52,16 +52,13 @@ import {any} from "prop-types";
 
 
 
-interface IAuthButtonProps extends RouteComponentProps<{}>{
+interface IAuthButtonProps {
     userName: string;
     isAuthenticated: boolean
 }
 
-class AuthButton extends Component<IAuthButtonProps,{}>  {
 
-    constructor(props:IAuthButtonProps) {
-        super(props);
-    }
+class AuthButton extends Component<IAuthButtonProps & RouteComponentProps<{}>, {}>  {
 
 
     render(){
@@ -69,7 +66,6 @@ class AuthButton extends Component<IAuthButtonProps,{}>  {
         const { userName } = this.props;
 
         if(this.props.isAuthenticated){
-            console.log("entrooo");
             return <div className={'UserNameDiv'}>
                 <p>{userName}</p>
                 <button onClick={() => {
