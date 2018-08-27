@@ -1,7 +1,7 @@
 import * as React from 'react';
 import './RegisterForm.css';
 import {ChangeEvent, Component, FormEvent} from "react";
-import {firefireStore} from "../../stores/FirestoreDB";
+import {firefireStore, userExits, firebase} from "../../stores/FirestoreDB";
 import {store} from "../../stores/Store";
 
 
@@ -34,28 +34,39 @@ export class RegisterForm extends Component<HeaderProps, IStateRegisterForm>{
 
     addUser = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        firefireStore.collection('users').add({
-            userName: this.state.userName,
-            password: this.state.password
-        }).then((docRef) => {
-            console.log("Document written with ID: ", docRef.id);
-            store.authenticate(this.state.userName, this.state.password).then((complete) =>{
+        const userName: string = this.state.userName;
+        const password: string = this.state.password;
+        userExits(userName).then((querySnapshot: firebase.firestore.QuerySnapshot) =>{
+            querySnapshot.forEach((doc: firebase.firestore.QueryDocumentSnapshot) => {
+                alert('User Already Exits: ' + doc.get('userName'));
+            });
+        }).catch((error: any) => {
+            if(error instanceof firebase.firestore.QuerySnapshot) {
+                firefireStore.collection('users').add({
+                    userName: userName,
+                    password: password
+                }).then((docRef: firebase.firestore.DocumentReference) => {
+                    console.log("Document written with ID: ", docRef.id);
+                    store.authenticate(userName, password).then((complete) =>{
 
-            }).catch((error: string) => {
-                alert(error);
-            });
-            this.setState({
-                userName:'',
-                password: ''
-            });
-        })
-        .catch((error) => {
-             console.error("Error adding document: ", error);
-             alert(error);
-             this.setState({
-                userName:'',
-                password: ''
-            });
+                    }).catch((error: string) => {
+                        console.log(error);
+                        alert(error.toString());
+                    });
+
+                }).catch((error) => {
+                        console.error("Error adding document: ", error);
+                        alert(error.toString());
+                    });
+            } else {
+                console.log(error);
+                alert(error.toString());
+            }
+        });
+
+        this.setState({
+            userName:'',
+            password: ''
         });
 
     };

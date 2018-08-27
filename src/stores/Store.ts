@@ -1,5 +1,7 @@
 import { observable, action, computed } from 'mobx';
-import {firefireStore, firebase} from "./FirestoreDB";
+import {firebase, userExits, firefireStore} from "./FirestoreDB";
+
+
 
 
 class Store{
@@ -8,25 +10,78 @@ class Store{
 
     @observable private username: string = '';
 
+    @observable private currentBalance: number = 0;
+
+    @observable inputTransactions: firebase.firestore.QueryDocumentSnapshot[] = [];
+    @observable outTransactions: firebase.firestore.QueryDocumentSnapshot[] = [];
+
+    private negativeBalance: number = 0;
+    private positiveBalance: number = 0;
+
 
     @action authenticate(user: string, password: string): Promise<string> {
         return new Promise<string>(((resolve, reject) => {
-            const usersRef = firefireStore.collection("users");
-            usersRef.where("userName", "==", user).where("password", "==", password).get().then((querySnapshot: firebase.firestore.QuerySnapshot) => {
-                if(querySnapshot.size === 0){
-                 return reject('Usuario o contraseña Incorrecto');
-                }
+            userExits(user, password).then((querySnapshot: firebase.firestore.QuerySnapshot) => {
                 querySnapshot.forEach((doc: firebase.firestore.QueryDocumentSnapshot) => {
-                    console.log(doc.data());
                     this.Authenticated = true;
                     this.username = doc.get('userName');
-                    resolve(doc.id);
+                    resolve(doc.data().toString());
                 });
-            }).catch((error) =>{
-                     reject(error);
-            });
+            }).catch( (error) => {
+                if(error instanceof firebase.firestore.QuerySnapshot) {
+                  return  reject('Usuario o contraseña incorrecto')
+                }
+                reject (error.toString());
+            })
         }));
     }
+
+
+    @action checkForBalance() {
+
+        const transactionsRef = firefireStore.collection("transactions");
+
+        transactionsRef.where("input", "==", this.username).onSnapshot( (querySnapshot: firebase.firestore.QuerySnapshot) => {
+
+            console.log(querySnapshot);
+
+            this.inputTransactions = [];
+            this.negativeBalance = 0;
+
+            querySnapshot.forEach((inputTransactions: firebase.firestore.QueryDocumentSnapshot) => {
+                this.inputTransactions.push(inputTransactions);
+                this.negativeBalance += inputTransactions.get('value');
+            });
+
+            this.currentBalance = this.positiveBalance - this.negativeBalance;
+
+        },(error) => {
+            console.log(error);
+            alert(error.toString());
+        });
+
+        transactionsRef.where("output", "==", this.username).onSnapshot((querySnapshot: firebase.firestore.QuerySnapshot) => {
+
+            this.outTransactions = [];
+            this.positiveBalance = 0;
+
+            querySnapshot.forEach((outTransactions: firebase.firestore.QueryDocumentSnapshot) => {
+                this.positiveBalance += outTransactions.get('value');
+                this.outTransactions.push(outTransactions);
+            });
+
+            this.currentBalance = this.positiveBalance - this.negativeBalance;
+
+
+        },(error) => {
+            console.log(error);
+            alert(error.toString());
+        });
+
+
+    }
+
+
 
     @action signout(cb: any) {
         this.Authenticated = false;
@@ -39,6 +94,11 @@ class Store{
 
     @computed get userName() {
         return this.username;
+    }
+
+    @computed get balance() {
+
+        return this.currentBalance;
     }
 
 }

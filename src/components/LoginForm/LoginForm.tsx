@@ -33,6 +33,7 @@ export class LoginForm extends Component<ILoginFormProps, IStateLoginForm>{
     login = (e: FormEvent<HTMLFormElement>): void => {
         e.preventDefault();
         store.authenticate(this.state.userName, this.state.password).then((data: string) =>{
+            store.checkForBalance();
             this.setState({
                 userName:'',
                 password: ''
