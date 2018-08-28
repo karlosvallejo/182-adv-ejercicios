@@ -46,7 +46,7 @@ export class TransaccionesForm extends Component<{}, IStateTransaccionesForm> {
 
     render() {
 
-        return <div className="LoginForm">
+        return <div className="">
             <h1>Enviar</h1>
             <form onSubmit={this.makeTransaction}>
                 <input

@@ -22,6 +22,10 @@ class Store{
     private positiveBalance: number = 0;
     private mempoolBalance: number = 0;
 
+    private inputTransactionListener: () => void;
+    private outputTransactionListener: () => void;
+    private mempoolTransactionListener: () => void;
+
 
     @action authenticate(user: string, password: string): Promise<string> {
         return new Promise<string>(((resolve, reject) => {
@@ -43,9 +47,9 @@ class Store{
 
     @action checkForBalance() {
 
-        const transactionsRef = firefireStore.collection("transactions");
+       const transactionsRef = firefireStore.collection("transactions");
 
-        transactionsRef.where("input", "==", this.userName).onSnapshot( (querySnapshot: firebase.firestore.QuerySnapshot) => {
+       this.inputTransactionListener = transactionsRef.where("input", "==", this.userName).onSnapshot( (querySnapshot: firebase.firestore.QuerySnapshot) => {
 
             this.inputTransactions = [];
             this.negativeBalance = 0;
@@ -57,12 +61,12 @@ class Store{
 
             this.currentBalance = this.positiveBalance - (this.negativeBalance + this.mempoolBalance);
 
-        },(error) => {
+       },(error) => {
             console.log(error);
             alert(error.toString());
-        });
+       });
 
-        transactionsRef.where("output", "==", this.userName).onSnapshot((querySnapshot: firebase.firestore.QuerySnapshot) => {
+       this.outputTransactionListener = transactionsRef.where("output", "==", this.userName).onSnapshot((querySnapshot: firebase.firestore.QuerySnapshot) => {
 
             this.outTransactions = [];
             this.positiveBalance = 0;
@@ -75,10 +79,10 @@ class Store{
             this.currentBalance = this.positiveBalance - (this.negativeBalance + this.mempoolBalance);
 
 
-        },(error) => {
+       },(error) => {
             console.log(error);
             alert(error.toString());
-        });
+       });
 
 
     }
@@ -87,7 +91,7 @@ class Store{
 
         const transactionsRef = firefireStore.collection("mempool");
 
-        transactionsRef.onSnapshot( (querySnapshot: firebase.firestore.QuerySnapshot) => {
+        this.mempoolTransactionListener = transactionsRef.onSnapshot( (querySnapshot: firebase.firestore.QuerySnapshot) => {
 
             this.mempoolInputUserTransactions = [];
             this.mempoolTransactionsAll = [];
@@ -115,11 +119,23 @@ class Store{
         });
     }
 
+    @action unsubscribeAll(){
+        this.inputTransactionListener();
+        this.outputTransactionListener();
+        this.mempoolTransactionListener();
+    }
+
 
 
 
     @action signout(cb: any) {
         this.Authenticated = false;
+        this.username = '';
+        this.currentBalance = 0;
+        this.negativeBalance = 0;
+        this.positiveBalance = 0;
+        this.mempoolBalance = 0;
+        this.unsubscribeAll();
         setTimeout(cb, 100) // fake async
     }
 

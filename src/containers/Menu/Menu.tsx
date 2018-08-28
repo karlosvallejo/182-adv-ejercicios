@@ -1,12 +1,11 @@
 import * as React from 'react';
 
 import './Menu.css';
-import {Link, RouteComponentProps, withRouter} from "react-router-dom";
+import {Link} from "react-router-dom";
 import {store} from "../../stores/Store";
 import {Component} from "react";
 import {observer} from "mobx-react";
-import * as PropTypes from 'prop-types'
-
+import {SignOutBox} from "../../AuthButton/AuthButton";
 
 
 @observer export class Menu extends Component<{},{}>{
@@ -20,11 +19,8 @@ import * as PropTypes from 'prop-types'
                 return <nav className="MenuNav">
                     <ul className="MenuUl">
                         <li>
-                            <ShowTheLocationWithRouter userName={store.userName}
+                            <SignOutBox userName={store.userName}
                                                        isAuthenticated={store.isAuthenticated}/>
-                        </li>
-                        <li>
-                            <Link to={'/Home'}>Home-Protegido</Link>
                         </li>
                     </ul>
                 </nav>
@@ -33,15 +29,17 @@ import * as PropTypes from 'prop-types'
             return <nav className="MenuNav">
                 <ul className="MenuUl">
                     <li>
-                        <ShowTheLocationWithRouter userName={store.userName}
+                        <SignOutBox userName={store.userName}
                                                    isAuthenticated={store.isAuthenticated}/>
                     </li>
                     <li>
                         <Link to={'/Registro'}>Registrar</Link>
                     </li>
+                    {/*
                     <li>
-                        <Link to={'/Home'}>Home-Protegido</Link>
+                       <Link to={'/Home'}>Home-Protegido</Link>
                     </li>
+                    */}
                 </ul>
             </nav>
         }
@@ -52,30 +50,4 @@ import * as PropTypes from 'prop-types'
 
 
 
-interface IAuthButtonProps {
-    userName: string;
-    isAuthenticated: boolean
-}
 
-
-class AuthButton extends Component<IAuthButtonProps & RouteComponentProps<{}>, {}>  {
-
-
-    render(){
-        const { history } = this.props;
-        const { userName } = this.props;
-
-        if(this.props.isAuthenticated){
-            return <div className={'UserNameDiv'}>
-                <p>{userName}</p>
-                <button onClick={() => {
-                    store.signout(() => history.push('/'))
-                }}>Sign out</button>
-            </div>
-        }
-        return  <Link to={'/'}>Sign In</Link>
-    }
-
-}
-
-const ShowTheLocationWithRouter = withRouter(AuthButton);

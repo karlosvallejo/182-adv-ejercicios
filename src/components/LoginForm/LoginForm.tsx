@@ -7,6 +7,7 @@ import {Redirect} from "react-router";
 import {Location} from "history";
 import {ChangeEvent} from "react";
 import {FormEvent} from "react";
+import {Link} from "react-router-dom";
 
 interface ILoginFormProps {
     title: string;
@@ -61,24 +62,29 @@ export class LoginForm extends Component<ILoginFormProps, IStateLoginForm>{
             return <Redirect to={from} />
     }
 
-    return <div className="LoginForm">
-        <h1>{this.props.title}</h1>
-        <form onSubmit={this.login}>
-            <input
+    return <div className="LoginFormDiv">
+        <h2>{this.props.title}</h2>
+        <form onSubmit={this.login} className={'LoginForm'}>
+            <div className={'divInputs'}>
+            <input className={'formInput'}
                 type="text"
                 name="userName"
+                required={true}
                 placeholder="User Name"
                 onChange={this.updateInput}
                 value={this.state.userName}
             />
-            <input
+            <input className={'formInput'}
                 type="password"
                 name="password"
+                required={true}
                 placeholder="Password"
                 onChange={this.updateInput}
                 value={this.state.password}
             />
-            <button type="submit">Submit</button>
+            </div>
+            <button className={'Button ButtonLogin'} type="submit">ENTER TO THE BLOCKCHAIN</button>
+            <button className={'Button ButtonRegister'} type="button"><Link className={'redirectLink'} to={'/Registro'}>CREATE ACCOUNT</Link></button>
         </form>
     </div>;
     }

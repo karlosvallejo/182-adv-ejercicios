@@ -24,7 +24,7 @@ import {Home} from "../Home/Home";
 
             <Router>
                 <div className={'divRouter'}>
-                 <Menu/>
+                    {/*   <Menu/> */}
                 <Route exact path="/" component={Login} />
                 <Route exact path="/Registro" component={Register} />
                 <ProtectedRoute  {...{authenticationPath: '/'}}  exact={true} path='/Home' component={Home} />

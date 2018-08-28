@@ -1,6 +1,18 @@
 .divLogin {
-    margin-left: 10%;
+    position: absolute;
+    left: 10%;
+    top: 20%;
     width: 80%;
     height: 60%;
-    background-color: rgba(155,50,255,0.4);
+    background-color: rgba(155,50,255,0.0);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.divLogin h1 {
+    margin: 3vh auto 0 auto;
+    font-family: 'Montserrat Subrayada', sans-serif;
+    font-size: 3vw;
 }
