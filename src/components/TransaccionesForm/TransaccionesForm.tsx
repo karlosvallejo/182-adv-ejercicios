@@ -9,7 +9,7 @@ import {sendTransaction} from "../../stores/FirestoreDB";
 
 interface IStateTransaccionesForm  {
     name?: string;
-    amount?: number;
+    amount?: string;
 }
 
 
@@ -19,21 +19,22 @@ export class TransaccionesForm extends Component<{}, IStateTransaccionesForm> {
         super(props);
         this.state = {
             name: '',
-            amount: 0,
+            amount: '',
         }
 
     }
 
     makeTransaction = (e: FormEvent<HTMLFormElement>): void => {
         e.preventDefault();
-            if(store.balance - this.state.amount >= 0) {
-               sendTransaction(this.state.name, store.userName, this.state.amount);
+            const toInt = parseInt(this.state.amount);
+            if(store.balance - toInt >= 0) {
+               sendTransaction(this.state.name, store.userName, toInt);
             } else {
                 alert('No tienes los suficientes fondos');
             }
             this.setState({
                 name:'',
-                amount: 0
+                amount: ''
             });
     };
 
@@ -57,8 +58,9 @@ export class TransaccionesForm extends Component<{}, IStateTransaccionesForm> {
                 />
                 <input
                     type="text"
+                    pattern="[0-9]*"
                     name="amount"
-                    placeholder="Amount"
+                    placeholder="Amount - only integers"
                     onChange={this.updateInput}
                     value={this.state.amount}
                 />

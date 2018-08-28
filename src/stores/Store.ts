@@ -15,8 +15,12 @@ class Store{
     @observable inputTransactions: firebase.firestore.QueryDocumentSnapshot[] = [];
     @observable outTransactions: firebase.firestore.QueryDocumentSnapshot[] = [];
 
+    @observable mempoolTransactionsAll: firebase.firestore.QueryDocumentSnapshot[] = [];
+    @observable mempoolInputUserTransactions: firebase.firestore.QueryDocumentSnapshot[] = [];
+
     private negativeBalance: number = 0;
     private positiveBalance: number = 0;
+    private mempoolBalance: number = 0;
 
 
     @action authenticate(user: string, password: string): Promise<string> {
@@ -41,9 +45,7 @@ class Store{
 
         const transactionsRef = firefireStore.collection("transactions");
 
-        transactionsRef.where("input", "==", this.username).onSnapshot( (querySnapshot: firebase.firestore.QuerySnapshot) => {
-
-            console.log(querySnapshot);
+        transactionsRef.where("input", "==", this.userName).onSnapshot( (querySnapshot: firebase.firestore.QuerySnapshot) => {
 
             this.inputTransactions = [];
             this.negativeBalance = 0;
@@ -53,14 +55,14 @@ class Store{
                 this.negativeBalance += inputTransactions.get('value');
             });
 
-            this.currentBalance = this.positiveBalance - this.negativeBalance;
+            this.currentBalance = this.positiveBalance - (this.negativeBalance + this.mempoolBalance);
 
         },(error) => {
             console.log(error);
             alert(error.toString());
         });
 
-        transactionsRef.where("output", "==", this.username).onSnapshot((querySnapshot: firebase.firestore.QuerySnapshot) => {
+        transactionsRef.where("output", "==", this.userName).onSnapshot((querySnapshot: firebase.firestore.QuerySnapshot) => {
 
             this.outTransactions = [];
             this.positiveBalance = 0;
@@ -70,7 +72,7 @@ class Store{
                 this.outTransactions.push(outTransactions);
             });
 
-            this.currentBalance = this.positiveBalance - this.negativeBalance;
+            this.currentBalance = this.positiveBalance - (this.negativeBalance + this.mempoolBalance);
 
 
         },(error) => {
@@ -80,6 +82,39 @@ class Store{
 
 
     }
+
+    @action mempoolTransactions() {
+
+        const transactionsRef = firefireStore.collection("mempool");
+
+        transactionsRef.onSnapshot( (querySnapshot: firebase.firestore.QuerySnapshot) => {
+
+            this.mempoolInputUserTransactions = [];
+            this.mempoolTransactionsAll = [];
+            this.mempoolBalance = 0;
+
+            querySnapshot.forEach((memTransactions: firebase.firestore.QueryDocumentSnapshot) => {
+
+
+
+
+                if(memTransactions.get('input') === this.userName){
+                    this.mempoolInputUserTransactions.push(memTransactions);
+                    this.mempoolBalance += memTransactions.get('value');
+                } else {
+                    this.mempoolTransactionsAll.push(memTransactions);
+                }
+
+            });
+
+            this.currentBalance = this.positiveBalance - (this.negativeBalance + this.mempoolBalance);
+
+        },(error) => {
+            console.log(error);
+            alert(error.toString());
+        });
+    }
+
 
 
 

@@ -60,7 +60,7 @@ exports.mempoolcleanup = functions.https.onRequest((req, res) => {
 exports.mempoolcreateDocument = functions.https.onRequest((req, res) => {
     const input = req.query.input;
     const output = req.query.output;
-    const value = req.query.value;
+    const value = parseInt(req.query.value);
 
     const db = admin.firestore();
     const collectionMempool = db.collection('mempool');

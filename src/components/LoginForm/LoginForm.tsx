@@ -5,7 +5,6 @@ import {store} from "../../stores/Store";
 import {Component} from "react";
 import {Redirect} from "react-router";
 import {Location} from "history";
-import {observer} from "mobx-react";
 import {ChangeEvent} from "react";
 import {FormEvent} from "react";
 
@@ -34,6 +33,7 @@ export class LoginForm extends Component<ILoginFormProps, IStateLoginForm>{
         e.preventDefault();
         store.authenticate(this.state.userName, this.state.password).then((data: string) =>{
             store.checkForBalance();
+            store.mempoolTransactions();
             this.setState({
                 userName:'',
                 password: ''

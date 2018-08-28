@@ -15,7 +15,7 @@ const app: firebase.app.App = firebase.initializeApp({
 });
 
 
-const fireStore: firebase.firestore.Firestore = app.firestore();
+export const fireStore: firebase.firestore.Firestore = app.firestore();
 
 fireStore.settings({
     timestampsInSnapshots: true
@@ -59,17 +59,15 @@ export const userExits =(user: string, password?: string): Promise<firebase.fire
     });
 };
 
-export const sendTransaction = (receiver: string, sender: string, amount: number) =>{
+export const sendTransaction = (receiver: string, sender: string, amount: number) => {
 
     userExits(receiver).then((snapshot: firebase.firestore.QuerySnapshot) =>{
 
-        const valueSring: string = amount.toString();
-        const value: number = parseInt(valueSring);
 
-        firefireStore.collection('transactions').add({
+        firefireStore.collection('mempool').add({
             input: sender,
             output: receiver,
-            value: value
+            value: amount
         }).then((docRef: firebase.firestore.DocumentReference) => {
             console.log("Document written with ID: ", docRef.id);
 
@@ -90,6 +88,17 @@ export const sendTransaction = (receiver: string, sender: string, amount: number
     });
 
 
+
+};
+
+export const deleteTransaction = (docId: string) => {
+
+    firefireStore.collection("mempool").doc(docId).delete().then(() => {
+        console.log("Document successfully deleted!");
+    }).catch((error) => {
+        console.error(error);
+        alert('error eliminando transaccion')
+    });
 
 };
 
