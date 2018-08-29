@@ -1,7 +1,62 @@
 .divHome {
-    position: relative;
-    left: 5%;
-    width: 90%;
-    height: 80%;
-    background-color: rgba(100,200,100,1);
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(100,200,100,0);
+}
+
+.panelOne {
+    margin: 1vh 1%;
+    width: 98%;
+    height: 48%;
+    background: rgba(255,255,255,1);
+    box-shadow: 0.05vw 0.05vw 0.3vw rgba(0,0,0,0.3);
+    border-radius: 15px;
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
+ }
+
+
+.panelTwoThreeWrapper {
+    width: 100%;
+    height: 50%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.panelTwo{
+    width: 50%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.panelThree{
+    width: 50%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.balanceDiv{
+
+}
+
+.balanceDiv h3 {
+    margin: auto;
+    font-family: 'Roboto', sans-serif;
+    font-weight: bolder;
+    font-size: 5vw;
+    text-align: center;
+}
+
+.balanceDiv h5 {
+    margin: auto;
+    font-family: 'Dosis', sans-serif;
+    font-weight: bold;
+    font-size: 1.5vw;
+    text-align: center;
 }

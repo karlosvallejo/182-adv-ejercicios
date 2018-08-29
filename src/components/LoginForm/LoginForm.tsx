@@ -5,53 +5,27 @@ import {store} from "../../stores/Store";
 import {Component} from "react";
 import {Redirect} from "react-router";
 import {Location} from "history";
-import {ChangeEvent} from "react";
-import {FormEvent} from "react";
-import {Link} from "react-router-dom";
+import {FormGeneral} from "../FormGeneral/FormGeneral";
+import {observer} from "mobx-react";
 
 interface ILoginFormProps {
-    title: string;
     from: Location["state"];
 }
 
-interface IStateLoginForm  {
-    userName?: string;
-    password?: string;
-}
 
+@observer export class LoginForm extends Component<ILoginFormProps, {}>{
 
-export class LoginForm extends Component<ILoginFormProps, IStateLoginForm>{
-
-    constructor(props: ILoginFormProps){
+    constructor(props: ILoginFormProps) {
         super(props);
-        this.state = {
-            userName: '',
-            password: '',
-        }
     }
 
-    login = (e: FormEvent<HTMLFormElement>): void => {
-        e.preventDefault();
-        store.authenticate(this.state.userName, this.state.password).then((data: string) =>{
+    login = (userName: string, password: string): void => {
+        store.authenticate(userName, password).then((data: string) =>{
             store.checkForBalance();
             store.mempoolTransactions();
-            this.setState({
-                userName:'',
-                password: ''
-            });
-        }).catch((error: string) =>{
+        }).catch((error: string) => {
             alert(error);
-            this.setState({
-                userName:'',
-                password: ''
-            });
         })
-    };
-
-    updateInput = (e: ChangeEvent<HTMLInputElement>) => {
-        this.setState({
-            [e.target.name]: e.target.value
-        });
     };
 
     render() {
@@ -62,30 +36,6 @@ export class LoginForm extends Component<ILoginFormProps, IStateLoginForm>{
             return <Redirect to={from} />
     }
 
-    return <div className="LoginFormDiv">
-        <h2>{this.props.title}</h2>
-        <form onSubmit={this.login} className={'LoginForm'}>
-            <div className={'divInputs'}>
-            <input className={'formInput'}
-                type="text"
-                name="userName"
-                required={true}
-                placeholder="User Name"
-                onChange={this.updateInput}
-                value={this.state.userName}
-            />
-            <input className={'formInput'}
-                type="password"
-                name="password"
-                required={true}
-                placeholder="Password"
-                onChange={this.updateInput}
-                value={this.state.password}
-            />
-            </div>
-            <button className={'Button ButtonLogin'} type="submit">ENTER TO THE BLOCKCHAIN</button>
-            <button className={'Button ButtonRegister'} type="button"><Link className={'redirectLink'} to={'/Registro'}>CREATE ACCOUNT</Link></button>
-        </form>
-    </div>;
+    return <FormGeneral title={'LOG IN'} buttonText={'ENTER TO THE BLOCKCHAIN'} createAccount={true} callbackAction={this.login}/>
     }
 }

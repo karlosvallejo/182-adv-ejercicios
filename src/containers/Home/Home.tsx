@@ -17,10 +17,23 @@ import {observer} from "mobx-react";
     render() {
 
         return <div className={'divHome'}>
+            <div className={'panelOne'}>
+            <div className={'balanceDiv'}>
             <h3>{store.balance}</h3>
+            <h5>Balance</h5>
+            </div>
             <TransaccionesView/>
+            </div>
+
+            <div className={'panelTwoThreeWrapper'}>
+            <div className={'panelTwo'}>
             <TransaccionesForm/>
+            </div>
+            <div className={'panelThree'}>
             <Mempool/>
+            </div>
+            </div>
+
         </div>
     }
 

@@ -5,7 +5,7 @@ import {Link} from "react-router-dom";
 import {store} from "../../stores/Store";
 import {Component} from "react";
 import {observer} from "mobx-react";
-import {SignOutBox} from "../../AuthButton/AuthButton";
+import {SignOutBox} from "../../components/AuthButton/AuthButton";
 
 
 @observer export class Menu extends Component<{},{}>{

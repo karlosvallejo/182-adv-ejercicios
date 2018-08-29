@@ -1,0 +1,77 @@
+.generalDivMempool{
+    width: 95%;
+    height: 90%;
+    background-color: rgba(255,255,255,1);
+    box-shadow: 0.05vw 0.05vw 0.3vw rgba(0,0,0,0.3);
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+}
+
+.generalDivMempool h2 {
+    margin: 1.5vh 1vw;
+    font-family: 'Roboto', sans-serif;
+    font-weight: bold;
+    font-size: 1vw;
+    text-align: center;
+}
+
+.memTransactionsContainer{
+    height: 100%;
+    overflow: auto;
+}
+.mempoolLogiDiv {
+    width: 100%;
+    overflow: auto;
+    display: flex;
+    justify-content: space-around;
+}
+
+.estasletrasblancas {
+    margin: 0 auto;
+    padding: 0.8vh 0;
+    text-align: center;
+    font-family: 'Dosis', sans-serif;
+    font-weight: normal;;
+    font-size: 1vw;
+    color: rgba(255,255,255,0.8);
+}
+
+
+
+
+.userMempoolPair {
+    box-sizing: border-box;
+    border:solid rgba(38,198,218 ,0.8);
+    border-width: 0.06vw;
+    background: linear-gradient(45deg, rgba(38,198,218 ,1) 0%,rgba(38,166,154 ,0.8) 100%);
+}
+
+.userMempoolNoPair {
+    box-sizing: border-box;
+    border:solid rgba(38,166,154 ,0.8);
+    border-width: 0.06vw;
+    background: linear-gradient(45deg, rgba(38,166,154 ,0.8) 0%,rgba(38,198,218 ,0.8) 100%);
+}
+
+.userMempoolPair:hover{
+
+    background: rgba(236,64,122 ,1);
+    cursor: pointer;
+}
+
+.userMempoolNoPair:hover{
+
+    background: rgba(236,64,122 ,1);
+    cursor: pointer;
+}
+
+.estasletrasnegras {
+    margin: 0 auto;
+    padding: 0.8vh 0;
+    text-align: center;
+    font-family: 'Dosis', sans-serif;
+    font-weight: normal;;
+    font-size: 1vw;
+    color: rgba(0,0,0,0.8);
+}

@@ -18,7 +18,7 @@ export class Login extends Component<RouteProps,{}> {
 
         return <div className={'divLogin'}>
             <h1>BLOCKCHAIN SIMULATOR</h1>
-            <LoginForm from={this.props.location.state} title={'LOG IN'}/>
+            <LoginForm from={this.props.location.state}/>
         </div>
     }
     

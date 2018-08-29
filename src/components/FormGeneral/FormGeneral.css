@@ -1,0 +1,110 @@
+.LoginFormDiv {
+    width: 40%;
+    height: 60%;
+    background-color: rgba(255,255,255 ,1);
+    box-shadow: 0.05vw 0.05vw 0.25vw rgba(0,0,0,0.3);
+    border-radius: 15px;
+}
+
+.LoginFormDiv h2 {
+    margin: 3vh auto 1vh auto;
+    text-align: center;
+    font-family: 'Roboto', sans-serif;
+    font-weight: bold;
+    color: rgba(0,0,0,0.8);
+}
+
+.Button {
+    transition: box-shadow 0.2s ease-in;
+    border: solid;
+    border-width: 2px;
+    border-radius: 1vw;
+    outline: none;
+    font-family: 'Roboto', sans-serif;
+    font-weight: bolder;
+    font-size: 0.75vw;
+    color: rgba(255,255,255,0.9);
+}
+
+.Button:hover {
+    transition: box-shadow 0.2s ease-out;
+    box-shadow: 0.2vw 0.2vw 2vw rgba(0,0,0,0.2);
+    cursor: pointer;
+}
+
+.ButtonLogin {
+    width: 50%;
+    height: 20%;
+    background: linear-gradient(45deg, rgba(66,165,255,1) 0%,rgba(126,87,194 ,0.8) 100%);
+    border-color: rgba(66,165,245 ,1);
+}
+
+.ButtonRegister {
+    width: 30%;
+    height: 15%;
+    background-color: rgba(239,83,80 ,0.6);
+    border-color: rgba(239,83,80 ,1);
+}
+
+.redirectLink {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    text-decoration: none;
+}
+
+.LoginForm {
+    display: flex;
+    height: 70%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.divInputs {
+    width: 80%;
+    height: 55%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.formInput {
+    transition: box-shadow 0.2s ease-out, background-color 0.2s ease-out;
+    box-sizing: border-box;
+    height: 30%;
+    width: 100%;
+    padding: 0 5%;
+    border: solid;
+    border-width: 1px;
+    border-radius: 5px;
+    border-color: rgba(0,0,0,0.2);
+    outline: none;
+    background: rgba(0,0,0,0.01);
+    font-family: 'Dosis', sans-serif;
+    font-weight: normal;
+    font-size: 1vw;
+}
+
+.formInput::placeholder {
+    font-family: 'Dosis', sans-serif;
+    font-weight: normal;
+    font-size: 1vw;
+    color: rgba(0,0,0,0.3);
+}
+
+.formInput:hover{
+    transition: background-color 0.4s ease-out;
+
+    background-color: rgba(255,112,67 ,0.02)
+
+}
+
+.formInput:focus{
+    transition: box-shadow 0.4s ease-out, background-color 0.4s ease-out;
+    box-shadow: 0 0 0 1px #f90;
+    background-color: rgba(255,167,38 ,0.02);
+
+}
+

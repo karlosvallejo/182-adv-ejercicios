@@ -1,0 +1,23 @@
+.transiDivGeneral {
+    width: 95%;
+    height: 90%;
+    background-color: rgba(255,255,255,1);
+    box-shadow: 0.05vw 0.05vw 0.3vw rgba(0,0,0,0.3);
+    border-radius: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.formAndTitleDiv {
+    width: 50%;
+    height: 70%;
+}
+
+.formAndTitleDiv h1 {
+    margin: 1.5vh auto;
+    font-family: 'Roboto', sans-serif;
+    font-weight: bold;
+    font-size: 2vw;
+    text-align: center;
+}

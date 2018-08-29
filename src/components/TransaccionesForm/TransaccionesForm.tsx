@@ -46,10 +46,12 @@ export class TransaccionesForm extends Component<{}, IStateTransaccionesForm> {
 
     render() {
 
-        return <div className="">
+        return <div className="transiDivGeneral">
+            <div className={'formAndTitleDiv'}>
             <h1>Enviar</h1>
-            <form onSubmit={this.makeTransaction}>
+            <form onSubmit={this.makeTransaction} className={'LoginForm'}>
                 <input
+                    className={'formInput'}
                     type="text"
                     name="name"
                     placeholder="Receiver name"
@@ -57,6 +59,7 @@ export class TransaccionesForm extends Component<{}, IStateTransaccionesForm> {
                     value={this.state.name}
                 />
                 <input
+                    className={'formInput'}
                     type="text"
                     pattern="[0-9]*"
                     name="amount"
@@ -64,8 +67,9 @@ export class TransaccionesForm extends Component<{}, IStateTransaccionesForm> {
                     onChange={this.updateInput}
                     value={this.state.amount}
                 />
-                <button type="submit">Submit</button>
+                <button type="submit" className={'Button ButtonLogin'}>Submit</button>
             </form>
+            </div>
         </div>;
     }
 

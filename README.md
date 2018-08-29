@@ -1,6 +1,6 @@
 ## Instalación:
 * Click derecho -> Git Bash Here
-* git clone https://github.com/vagyriag/182-adv-ejercicios.git -b semana4
+* git clone https://github.com/karlosvallejo/182-adv-ejercicios.git -b Taller1
 * cd react-seed
 * npm install
 

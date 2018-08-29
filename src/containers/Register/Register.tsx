@@ -14,7 +14,8 @@ import {Redirect} from "react-router";
             return <Redirect to={'/'}/>
         }
         return <div className={'registroDiv'}>
-            <RegisterForm title={'Registrate Papu'}/>
+            <h1>BLOCKCHAIN SIMULATOR</h1>
+            <RegisterForm/>
         </div>
     }
 
