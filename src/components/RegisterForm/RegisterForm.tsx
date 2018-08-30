@@ -32,6 +32,7 @@ export class RegisterForm extends Component<{}, {}>{
                         sendTransaction(userName,'',50);
                         store.mempoolTransactions();
                         store.checkForBalance();
+                        store.saveLocalStorage();
                     }).catch((error: string) => {
                         console.log(error);
                         alert(error.toString());

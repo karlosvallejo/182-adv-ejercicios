@@ -62,18 +62,21 @@ export const sendTransaction = (receiver: string, sender: string, amount: number
 
     userExits(receiver).then((snapshot: firebase.firestore.QuerySnapshot) =>{
 
+        if(receiver === sender) {
+            alert('No puedes mandarte fondos a ti mismo');
+        } else {
+            firefireStore.collection('mempool').add({
+                input: sender,
+                output: receiver,
+                value: amount
+            }).then((docRef: firebase.firestore.DocumentReference) => {
+                console.log("Document written with ID: ", docRef.id);
 
-        firefireStore.collection('mempool').add({
-            input: sender,
-            output: receiver,
-            value: amount
-        }).then((docRef: firebase.firestore.DocumentReference) => {
-            console.log("Document written with ID: ", docRef.id);
-
-        }).catch((error) => {
-            console.error("Error adding document: ", error);
-            alert(error.toString());
-        });
+            }).catch((error) => {
+                console.error("Error adding document: ", error);
+                alert(error.toString());
+            });
+        }
 
     }).catch((error) =>{
 

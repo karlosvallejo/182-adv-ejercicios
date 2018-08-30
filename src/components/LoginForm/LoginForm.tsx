@@ -21,8 +21,9 @@ interface ILoginFormProps {
 
     login = (userName: string, password: string): void => {
         store.authenticate(userName, password).then((data: string) =>{
-            store.checkForBalance();
             store.mempoolTransactions();
+            store.checkForBalance();
+            store.saveLocalStorage();
         }).catch((error: string) => {
             alert(error);
         })

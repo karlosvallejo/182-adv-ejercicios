@@ -6,6 +6,7 @@ import {TransaccionesView} from "../../components/TransaccionesView/Transaccione
 import {TransaccionesForm} from "../../components/TransaccionesForm/TransaccionesForm";
 import {Mempool} from "../../components/Mempool/Mempool";
 import {observer} from "mobx-react";
+import {SignOutBox} from "../../components/AuthButton/AuthButton";
 
 
 @observer export class Home extends Component<{},{}> {
@@ -33,7 +34,8 @@ import {observer} from "mobx-react";
             <Mempool/>
             </div>
             </div>
-
+            <SignOutBox userName={store.userName}
+                        isAuthenticated={store.isAuthenticated}/>
         </div>
     }
 

@@ -44,6 +44,19 @@ class Store{
         }));
     }
 
+    @action subscribeChanges(){
+        if( ((this.inputTransactionListener || this.outputTransactionListener || this.mempoolTransactionListener) == null || undefined) && (localStorage.getItem('userName') != null || undefined)) {
+            this.username = localStorage.getItem('userName');
+            this.Authenticated = true;
+            store.checkForBalance();
+            store.mempoolTransactions();
+        }
+    }
+
+    saveLocalStorage(){
+        localStorage.setItem('userName',this.userName);
+    }
+
 
     @action checkForBalance() {
 
@@ -136,6 +149,7 @@ class Store{
         this.positiveBalance = 0;
         this.mempoolBalance = 0;
         this.unsubscribeAll();
+        localStorage.clear();
         setTimeout(cb, 100) // fake async
     }
 

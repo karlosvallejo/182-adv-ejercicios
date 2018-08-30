@@ -35,7 +35,7 @@
 
 .inputTransactionsDiv:hover{
     transition: box-shadow 0.3s ease-in;
-    box-shadow: 0.3vw 0.5vw 1vw rgba(0,0,0,0.3);
+    box-shadow: 0.1vw 0.3vw 0.5vw rgba(0,0,0,0.2);
 }
 
 .titlesDiv {

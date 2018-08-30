@@ -40,7 +40,10 @@ export interface ProtectedRouteProps extends RouteProps {
 }
 
 export class ProtectedRoute extends Route<ProtectedRouteProps> {
+
+
     public render() {
+        store.subscribeChanges();
         let redirectPath: string = '';
         if (!store.isAuthenticated) {
             redirectPath = this.props.authenticationPath;

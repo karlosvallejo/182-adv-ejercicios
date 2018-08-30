@@ -2,8 +2,8 @@ import * as React from "react";
 import './AuthButton.css'
 import {Component} from "react";
 import {RouteComponentProps, withRouter} from "react-router";
-import {store} from "../stores/Store";
 import {Link} from "react-router-dom";
+import {store} from "../../stores/Store";
 
 interface IAuthButtonProps {
     userName: string;
@@ -19,12 +19,7 @@ export class AuthButton extends Component<IAuthButtonProps & RouteComponentProps
         const { userName } = this.props;
 
         if(this.props.isAuthenticated){
-            return <div className={'UserNameDiv'}>
-                <p>{userName}</p>
-                <button onClick={() => {
-                    store.signout(() => history.push('/'))
-                }}>Sign out</button>
-            </div>
+            return  <div className={'signOutButton'} onClick={() => {  store.signout(() => history.push('/')) }}><div/> <p>{userName}</p></div>
         }
         return  <Link to={'/'}>Sign In</Link>
     }
